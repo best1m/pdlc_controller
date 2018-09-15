@@ -6,6 +6,7 @@ class App extends Component {
         listPairedDevices: [],
     }
 
+
     callListPairedDevices = () => {
         bluetoothSerial.list(res => {
             this.setState({listPairedDevices: res})
@@ -40,7 +41,8 @@ class App extends Component {
                 {listPairedDevices.length > 0
                     ? listPairedDevices.map((device, i) => {
                         return <div key={i}>
-                            <button onClick={() => this.onConnect(device.address)}>이름 : {device.name}, 주소 : {device.address}</button>
+                            <span>이름 : {device.name}, 주소 : {device.address}</span>
+                            <button onClick={() => this.onConnect(device.address)}>CONNECT</button>
                         </div>
                     })
                     : ''}
