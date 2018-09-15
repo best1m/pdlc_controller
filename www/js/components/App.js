@@ -4,13 +4,6 @@ import bluetoothSerial from 'cordova-plugin-bluetooth-serial';
 class App extends Component {
     state = {
         listPairedDevices: [],
-        selectedOption : 'llll'
-    }
-
-    handleOptionChange = (e) => {
-        this.setState({
-            selectedOption : e.currentTarget.value
-        })
     }
 
     callListPairedDevices = () => {
@@ -20,16 +13,22 @@ class App extends Component {
             alert(err);
         });
     }
-    test = (param) => {
-        alert(param);
-    }
-
     onConnect = (address) => {
         bluetoothSerial.connect(address, res => {
             alert(res);
         }, err => {
             alert(err)
         })
+    }
+    onDisConnect = () => {
+        bluetoothSerial.disconnect(
+            res => {
+                alert(res);
+            },
+            err => {
+                alert(err);
+            }
+        )
     }
 
     render() {
@@ -38,8 +37,6 @@ class App extends Component {
             <div>
                 <h1>pdlc controller</h1>
                 <button onClick={this.callListPairedDevices}>LIST</button>
-                <button>TYPE2</button>
-                <button>TYPE3</button>
                 {listPairedDevices.length > 0
                     ? listPairedDevices.map((device, i) => {
                         return <div key={i}>
@@ -47,6 +44,7 @@ class App extends Component {
                         </div>
                     })
                     : ''}
+                <button onClick={() => this.onDisConnect()}>DISCONNECT</button>
             </div>
         )
     }
