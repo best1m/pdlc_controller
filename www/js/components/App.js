@@ -13,14 +13,6 @@ class App extends Component {
         })
     }
 
-    onConnect = () => {
-        bluetoothSerial.connect("98:D3:32:10:99:74", res => {
-            alert(res);
-        }, err => {
-            alert(err)
-        })
-    }
-
     callListPairedDevices = () => {
         bluetoothSerial.list(res => {
             this.setState({listPairedDevices: res})
@@ -28,8 +20,16 @@ class App extends Component {
             alert(err);
         });
     }
-    test = () => {
-        alert('test');
+    test = (param) => {
+        alert(param);
+    }
+
+    onConnect = (address) => {
+        bluetoothSerial.connect(address, res => {
+            alert(res);
+        }, err => {
+            alert(err)
+        })
     }
 
     render() {
@@ -42,14 +42,11 @@ class App extends Component {
                 <button>TYPE3</button>
                 {listPairedDevices.length > 0
                     ? listPairedDevices.map((device, i) => {
-                        return <div key={i} onClick="this.onConnect">
-                            <input type="radio" value="a" key={i} onChange={this.handleOptionChange}/>
-                            <span>이름 : {device.name}, 주소 : {device.address}</span>
+                        return <div key={i}>
+                            <button onClick={() => this.onConnect(device.address)}>이름 : {device.name}, 주소 : {device.address}</button>
                         </div>
                     })
                     : ''}
-            <button onClick={this.onConnect}>CONNECT</button>
-            {this.state.selectedOption}
             </div>
         )
     }
