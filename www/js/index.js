@@ -19,9 +19,6 @@ var app = {
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
 
-        bluetoothSerial.isEnabled(app.listPairedDevices, function () {
-            app.showError('Enable bluetooth')
-        });
 
     },
 
