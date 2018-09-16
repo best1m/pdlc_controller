@@ -8,11 +8,11 @@ $ npm install
 ```
 
 ```sh
-$ npm run build || yarn build
+$ cordova prepare
 ```
 
 ```sh
-$ cordova prepare
+$ npm run build || yarn build
 ```
 
 ```sh
