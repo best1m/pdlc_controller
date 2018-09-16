@@ -19,10 +19,10 @@ void loop() {
       char data = SerialBT.read(); 
       switch(data)
       {
-        case 'a': Serial.write("this is A");break;
-        case 'b': Serial.write("this is B");break; 
-        case 'c': Serial.write("this is C");break; 
-        case 'd': Serial.write("this is D");break; 
+        case 'a': Serial.write("A");break;
+        case 'b': Serial.write("B");break; 
+        case 'c': Serial.write("C");break; 
+        case 'd': Serial.write("D");break; 
         default : Serial.write("pardon?");break;
       }
      

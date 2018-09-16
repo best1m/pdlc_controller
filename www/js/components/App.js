@@ -13,8 +13,8 @@ class App extends Component {
 
     // componentDidMount(){ }
 
-    onSendData = () => {
-        bluetoothSerial.write("a", res => {
+    onSendData = (type) => {
+        bluetoothSerial.write(type, res => {
             console.log(res);
         }, err => {
             alert(err)
@@ -45,20 +45,28 @@ class App extends Component {
 
     render() {
         const {listPairedDevices} = this.state;
+        const lineStyle = {marginTop : '20px'}
         return (
             <div>
                 <h1>pdlc controller</h1>
                 <button onClick={this.callListPairedDevices}>LIST</button>
                 {listPairedDevices.length > 0
                     ? listPairedDevices.map((device, i) => {
-                        return <div key={i}>
-                            <span>이름 : {device.name}, 주소 : {device.address}</span>
+                        return <div style={lineStyle} key={i}>
+                            <div>이름 : {device.name}, 주소 : {device.address}</div>
                             <button onClick={() => this.onConnect(device)}>CONNECT</button>
                         </div>
                     })
                     : ''}
-                <button onClick={() => this.onDisConnect()}>DISCONNECT</button>
-                <button onClick={this.onSendData}>send</button>
+                <div style={lineStyle}>
+                    <button onClick={() => this.onSendData('a')}>TYPE A</button>
+                    <button onClick={() => this.onSendData('b')}>TYPE B</button>
+                    <button onClick={() => this.onSendData('c')}>TYPE C</button>
+                    <button onClick={() => this.onSendData('d')}>TYPE D</button>
+                </div>
+
+                <button style={lineStyle} onClick={() => this.onDisConnect()}>DISCONNECT</button>
+
             </div>
         )
     }
