@@ -14,6 +14,9 @@ void setup() {
 void loop() {
     if (SerialBT.available()) {
         Serial.write(SerialBT.read());
+        if(SerialBT.read() == 1){
+           Serial.write("this is 1");
+          }
     }
 
     if (Serial.available()) {

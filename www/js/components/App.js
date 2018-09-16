@@ -3,18 +3,23 @@ import bluetoothSerial from 'cordova-plugin-bluetooth-serial';
 
 class App extends Component {
     state = {
-        listPairedDevices: [{name : '이름', address : '주소'}],
+        listPairedDevices: [
+            {
+                name: '이름',
+                address: '주소'
+            }
+        ]
     }
 
-    // componentDidMount(){
-    //     bluetoothSerial.list(res => {
-    //         this.setState({listPairedDevices: res})
-    //     }, err => {
-    //         alert(err);
-    //     });
-     
-    // }
+    // componentDidMount(){ }
 
+    onSendData = () => {
+        bluetoothSerial.write('1', res => {
+            console.log(res);
+        }, err => {
+            alert(err)
+        });
+    }
 
     callListPairedDevices = () => {
         bluetoothSerial.list(res => {
@@ -31,14 +36,11 @@ class App extends Component {
         })
     }
     onDisConnect = () => {
-        bluetoothSerial.disconnect(
-            res => {
-                alert(res);
-            },
-            err => {
-                alert(err);
-            }
-        )
+        bluetoothSerial.disconnect(res => {
+            alert(res);
+        }, err => {
+            alert(err);
+        })
     }
 
     render() {
@@ -56,6 +58,7 @@ class App extends Component {
                     })
                     : ''}
                 <button onClick={() => this.onDisConnect()}>DISCONNECT</button>
+                <button onClick={this.onSendData}>send</button>
             </div>
         )
     }

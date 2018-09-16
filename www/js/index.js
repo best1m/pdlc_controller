@@ -32,11 +32,8 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
-    },
-
-    showError: function (error) {
-        alert(error);
     }
+
 };
 
 app.initialize();
