@@ -14,7 +14,7 @@ class App extends Component {
     // componentDidMount(){ }
 
     onSendData = () => {
-        bluetoothSerial.write('1', res => {
+        bluetoothSerial.write("a", res => {
             console.log(res);
         }, err => {
             alert(err)
