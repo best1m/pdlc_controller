@@ -4,3 +4,4 @@ plugins/
 bundle.js
 .vscode
 typings
+package-lock.json
