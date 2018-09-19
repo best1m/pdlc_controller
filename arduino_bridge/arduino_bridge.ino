@@ -1,5 +1,5 @@
 
-#define PC_BAUDRATE 9600
+#define PC_BAUDRATE 115200
 #define BLUETOOTH_BAUDRATE 9600
 
 #include <SoftwareSerial.h>
@@ -12,6 +12,10 @@ bool D = true;
 
 void setup()
 {
+  pinMode(A0, OUTPUT);
+  pinMode(A1, OUTPUT);
+  digitalWrite(A0, HIGH);
+
   Serial.begin(PC_BAUDRATE);
   SerialBT.begin(BLUETOOTH_BAUDRATE);
   for (int i = 8; i <= 11; i++)
@@ -30,16 +34,24 @@ void loop()
   if (SerialBT.available())
   {
     char data = SerialBT.read();
+    int countData = (int)SerialBT.read();
+
     if (data == 'a')
     {
-       digitalWrite(8, A ? LOW : HIGH);
-       A = !A;
+      while(true){
+        digitalWrite(A0, LOW);
+        delay(14);
+        digitalWrite(A0, HIGH);
+        delay(2);
+      }
+      //  digitalWrite(8, A ? LOW : HIGH);
+      //  A = !A;
 //      toggleFunc(8, A);
     }
     else if (data == 'b')
     {
-       digitalWrite(9, B ? LOW : HIGH);
-       B = !B;
+      //  digitalWrite(9, B ? LOW : HIGH);
+      //  B = !B;
     }
     else if (data == 'c')
     {
@@ -51,15 +63,10 @@ void loop()
       digitalWrite(11, D ? LOW : HIGH);
        D = !D;
     }
+
+    Serial.println(data);
+    Serial.println(countData);
   
   }
 }
 
-void toggleFunc(int pin, bool boolData)
-{
-
-//  boolData == 1 ? pinMode(pin, OUTPUT) : digitalWrite(pin, HIGH);
-//  boolData = !boolData;
- 
-  
-}

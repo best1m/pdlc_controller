@@ -8,10 +8,14 @@ class App extends Component {
                 name: '이름',
                 address: '주소'
             }
-        ]
+        ],
+        count : 8
     }
 
     // componentDidMount(){ }
+    onIncreaseCount = () => {
+        this.onSendData("777");
+    }
 
     onSendData = (type) => {
         bluetoothSerial.write(type, res => {
@@ -63,6 +67,11 @@ class App extends Component {
                     <button onClick={() => this.onSendData('b')}>TYPE B</button>
                     <button onClick={() => this.onSendData('c')}>TYPE C</button>
                     <button onClick={() => this.onSendData('d')}>TYPE D</button>
+                </div>
+
+                <div style={lineStyle}>
+                    <button onClick={this.onIncreaseCount}>INCREASE</button>
+                    <button onClick={this.onDecreaseCount}>DECREASE</button>
                 </div>
 
                 <button style={lineStyle} onClick={() => this.onDisConnect()}>DISCONNECT</button>
