@@ -11,7 +11,6 @@ class App extends Component {
                 address: '...'
             }
         ],
-        count : 8
     }
 
     onIncreaseCount = () => {
@@ -54,14 +53,13 @@ class App extends Component {
 
     render() {
         const {listPairedDevices} = this.state;
-        const lineStyle = {marginTop : '20px'}
         return (
             <div className="kk-app">
-                <h1>pdlc controller</h1>
+                <div className="kk-main-title">pdlc controller</div>
                 <button onClick={this.callListPairedDevices}>LIST</button>
                 {listPairedDevices.length > 0
                     ? listPairedDevices.map((device, i) => {
-                        return <div style={lineStyle} key={i}>
+                        return <div key={i}>
                             <div>이름 : {device.name}, 주소 : {device.address}</div>
                             <button onClick={() => this.onConnect(device)}>CONNECT</button>
                         </div>
