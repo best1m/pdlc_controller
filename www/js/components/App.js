@@ -56,7 +56,7 @@ class App extends Component {
         const {listPairedDevices} = this.state;
         const lineStyle = {marginTop : '20px'}
         return (
-            <div className="main">
+            <div className="kk-app">
                 <h1>pdlc controller</h1>
                 <button onClick={this.callListPairedDevices}>LIST</button>
                 {listPairedDevices.length > 0
