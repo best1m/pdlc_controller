@@ -9,12 +9,14 @@ bool A = true;
 bool B = true;
 bool C = true;
 bool D = true;
+int lowDelay = 8;
+int highDelay = 8;
+bool isOn = true;
 
 void setup()
 {
   pinMode(A0, OUTPUT);
   pinMode(A1, OUTPUT);
-  digitalWrite(A0, HIGH);
 
   Serial.begin(PC_BAUDRATE);
   SerialBT.begin(BLUETOOTH_BAUDRATE);
@@ -23,50 +25,75 @@ void setup()
     pinMode(i, OUTPUT);
     digitalWrite(i, HIGH);
   }
-  
 }
 
+void dimmer()
+{
+  digitalWrite(A0, LOW);
+  delay(lowDelay);
+  digitalWrite(A0, HIGH);
+  delay(highDelay);
 
+}
 
 void loop()
 {
+  if(isOn){
+      dimmer();
+  }
 
   if (SerialBT.available())
   {
     char data = SerialBT.read();
-    int countData = (int)SerialBT.read();
 
     if (data == 'a')
     {
-      while(true){
-        digitalWrite(A0, LOW);
-        delay(14);
-        digitalWrite(A0, HIGH);
-        delay(2);
-      }
+
       //  digitalWrite(8, A ? LOW : HIGH);
       //  A = !A;
-//      toggleFunc(8, A);
+      //      toggleFunc(8, A);
     }
     else if (data == 'b')
     {
-      //  digitalWrite(9, B ? LOW : HIGH);
-      //  B = !B;
+      digitalWrite(9, B ? LOW : HIGH);
+      B = !B;
     }
     else if (data == 'c')
     {
-       digitalWrite(10, C ? LOW : HIGH);
-       C = !C;
+      digitalWrite(10, C ? LOW : HIGH);
+      C = !C;
     }
     else if (data == 'd')
     {
       digitalWrite(11, D ? LOW : HIGH);
-       D = !D;
+      D = !D;
+    }
+    else if (data == 'h')
+    {
+
+      lowDelay != 0 ? lowDelay -= 1 : 0;
+      highDelay < 16 ? highDelay += 1 : 16;
+
+      Serial.print("LOWDELAY : ");
+      Serial.println(lowDelay);
+      Serial.print("HIGHDELAY : ");
+      Serial.println(highDelay);
+
+      dimmer();
+    }
+    else if (data == 'l')
+    {
+      highDelay != 0 ? highDelay -= 1 : 0;
+      lowDelay < 16 ? lowDelay += 1 : 16;
+
+      Serial.print("LOWDELAY : ");
+      Serial.println(lowDelay);
+      Serial.print("HIGHDELAY : ");
+      Serial.println(highDelay);
+
+      dimmer();
     }
 
     Serial.println(data);
-    Serial.println(countData);
-  
   }
 }
-

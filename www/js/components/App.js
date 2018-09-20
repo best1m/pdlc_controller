@@ -14,7 +14,11 @@ class App extends Component {
 
     // componentDidMount(){ }
     onIncreaseCount = () => {
-        this.onSendData("777");
+        this.onSendData('h');
+    }
+
+    onDecreaseCount = () => {
+        this.onSendData('l');
     }
 
     onSendData = (type) => {
