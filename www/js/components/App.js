@@ -6,8 +6,8 @@ class App extends Component {
     state = {
         listPairedDevices: [
             {
-                name: '이름',
-                address: '주소'
+                name: '...',
+                address: '...'
             }
         ],
         count : 8
@@ -68,18 +68,18 @@ class App extends Component {
                     })
                     : ''}
                 <div className='kk-button-group'>
-                    <button onClick={() => this.onSendData('a')}>TYPE A</button>
-                    <button onClick={() => this.onSendData('b')}>TYPE B</button>
-                    <button onClick={() => this.onSendData('c')}>TYPE C</button>
-                    <button onClick={() => this.onSendData('d')}>TYPE D</button>
+                    <button className="kk-type-button" onClick={() => this.onSendData('a')}>TYPE A</button>
+                    <button className="kk-type-button" onClick={() => this.onSendData('b')}>TYPE B</button>
+                    <button className="kk-type-button" onClick={() => this.onSendData('c')}>TYPE C</button>
+                    <button className="kk-type-button" onClick={() => this.onSendData('d')}>TYPE D</button>
                 </div>
 
                 <div className='kk-button-group'>
-                    <button onClick={this.onIncreaseCount}>INCREASE</button>
-                    <button onClick={this.onDecreaseCount}>DECREASE</button>
+                    <button className="kk-type-button" onClick={this.onIncreaseCount}>INCREASE</button>
+                    <button className="kk-type-button" onClick={this.onDecreaseCount}>DECREASE</button>
                 </div>
 
-                <button style={lineStyle} onClick={() => this.onDisConnect()}>DISCONNECT</button>
+                <button className='kk-button-group' onClick={() => this.onDisConnect()}>DISCONNECT</button>
 
             </div>
         )
