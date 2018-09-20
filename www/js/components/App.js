@@ -3,6 +3,7 @@ import bluetoothSerial from 'cordova-plugin-bluetooth-serial';
 import '../../scss/main.scss'
 
 class App extends Component {
+
     state = {
         listPairedDevices: [
             {
@@ -13,7 +14,6 @@ class App extends Component {
         count : 8
     }
 
-    // componentDidMount(){ }
     onIncreaseCount = () => {
         this.onSendData('h');
     }
