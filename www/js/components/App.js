@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import bluetoothSerial from 'cordova-plugin-bluetooth-serial';
-import '../../scss/main.scss'
+import '../../scss/main.scss';
+import Spinner from "react-md-spinner";
 
 class App extends Component {
 
@@ -71,6 +72,8 @@ class App extends Component {
                     <button className="kk-type-button" onClick={() => this.onSendData('c')}>TYPE C</button>
                     <button className="kk-type-button" onClick={() => this.onSendData('d')}>TYPE D</button>
                 </div>
+
+                <Spinner/>
 
                 <div className='kk-button-group'>
                     <button className="kk-type-button" onClick={this.onIncreaseCount}>INCREASE</button>
