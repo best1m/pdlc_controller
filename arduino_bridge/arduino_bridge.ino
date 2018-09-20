@@ -79,7 +79,6 @@ void loop()
       Serial.print("HIGHDELAY : ");
       Serial.println(highDelay);
 
-      dimmer();
     }
     else if (data == 'l')
     {
@@ -91,7 +90,6 @@ void loop()
       Serial.print("HIGHDELAY : ");
       Serial.println(highDelay);
 
-      dimmer();
     }
 
     Serial.println(data);
