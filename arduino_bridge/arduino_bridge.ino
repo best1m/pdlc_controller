@@ -11,7 +11,6 @@ bool C = true;
 bool D = true;
 int lowDelay = 8;
 int highDelay = 8;
-bool isOn = true;
 
 void setup()
 {
@@ -33,14 +32,11 @@ void dimmer()
   delay(lowDelay);
   digitalWrite(A0, HIGH);
   delay(highDelay);
-
 }
 
 void loop()
 {
-  if(isOn){
-      dimmer();
-  }
+  dimmer();
 
   if (SerialBT.available())
   {
@@ -49,9 +45,9 @@ void loop()
     if (data == 'a')
     {
 
-      //  digitalWrite(8, A ? LOW : HIGH);
-      //  A = !A;
-      //      toggleFunc(8, A);
+      digitalWrite(8, A ? LOW : HIGH);
+      A = !A;
+      toggleFunc(8, A);
     }
     else if (data == 'b')
     {
@@ -78,7 +74,6 @@ void loop()
       Serial.println(lowDelay);
       Serial.print("HIGHDELAY : ");
       Serial.println(highDelay);
-
     }
     else if (data == 'l')
     {
@@ -89,7 +84,6 @@ void loop()
       Serial.println(lowDelay);
       Serial.print("HIGHDELAY : ");
       Serial.println(highDelay);
-
     }
 
     Serial.println(data);
