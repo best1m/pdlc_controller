@@ -47,7 +47,6 @@ void loop()
 
       digitalWrite(8, A ? LOW : HIGH);
       A = !A;
-      toggleFunc(8, A);
     }
     else if (data == 'b')
     {
