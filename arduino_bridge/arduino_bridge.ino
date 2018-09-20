@@ -9,8 +9,8 @@ bool A = true;
 bool B = true;
 bool C = true;
 bool D = true;
-int lowDelay = 8;
-int highDelay = 8;
+int lowDelay = 16;
+int highDelay = 0;
 
 void setup()
 {
