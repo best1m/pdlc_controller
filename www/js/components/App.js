@@ -11,7 +11,16 @@ class App extends Component {
                 name: '...',
                 address: '...',
             }
-        ]
+        ],
+        loading :true,
+    }
+
+    getBackdrop = () => {
+        if(this.state.loading){
+            return {
+                opacity : 0.1
+            }
+        }
     }
 
     onIncreaseCount = () => {
@@ -38,8 +47,14 @@ class App extends Component {
         });
     }
     onConnect = (device) => {
+        this.setState({
+            loading : true
+        });
         bluetoothSerial.connect(device.address, res => {
             alert(`Connnected to ${device.name}`);
+            this.setState({
+                loading : false
+            });
         }, err => {
             alert(err)
         })
@@ -53,7 +68,7 @@ class App extends Component {
     }
 
     render() {
-        const {listPairedDevices, spinner} = this.state;
+        const {listPairedDevices, loading} = this.state;
         return (
             <div className="kk-app">
                 <div className="kk-main-title">pdlc controller</div>
@@ -80,6 +95,10 @@ class App extends Component {
 
                 <button className='kk-button-group' onClick={() => this.onDisConnect()}>DISCONNECT</button>
 
+                <div className="kk-spinner-wrapper">
+                 {loading ? <Spinner size={50}/> : ''}
+                </div>
+                <div> className="kk-backdrop"</div>
             </div>
         )
     }
