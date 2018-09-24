@@ -9,9 +9,9 @@ class App extends Component {
         listPairedDevices: [
             {
                 name: '...',
-                address: '...'
+                address: '...',
             }
-        ],
+        ]
     }
 
     onIncreaseCount = () => {
@@ -53,7 +53,7 @@ class App extends Component {
     }
 
     render() {
-        const {listPairedDevices} = this.state;
+        const {listPairedDevices, spinner} = this.state;
         return (
             <div className="kk-app">
                 <div className="kk-main-title">pdlc controller</div>
@@ -72,8 +72,6 @@ class App extends Component {
                     <button className="kk-type-button" onClick={() => this.onSendData('c')}>TYPE C</button>
                     <button className="kk-type-button" onClick={() => this.onSendData('d')}>TYPE D</button>
                 </div>
-
-                <Spinner/>
 
                 <div className='kk-button-group'>
                     <button className="kk-type-button" onClick={this.onIncreaseCount}>INCREASE</button>
