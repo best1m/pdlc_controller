@@ -44,11 +44,11 @@ class App extends Component {
             loading : true
         });
         bluetoothSerial.connect(device.address, res => {
-            alert(`Connnected to ${device.name}`);
             this.setState({
                 loading : false,
                 conneted : true
             });
+            alert(`Connnected to ${device.name}`);
         }, err => {
             alert(err)
         })
