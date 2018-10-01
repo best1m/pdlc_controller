@@ -1,4 +1,3 @@
-
 .kk-app {
     height: 100vh;
 
@@ -15,9 +14,20 @@
 
     .kk-spinner-wrapper {
         position: absolute;
-        z-index: 2;
-        top:50%;
+        z-index: 1;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+    }
+
+    .kk-backdrop {
+        position: absolute;
+        display: none;
+        background-color: black;
+        height: 100%;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        opacity: 0.5;
     }
 }

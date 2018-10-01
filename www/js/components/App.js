@@ -12,13 +12,13 @@ class App extends Component {
                 address: '...',
             }
         ],
-        loading :true,
+        loading :false,
     }
 
     getBackdrop = () => {
         if(this.state.loading){
             return {
-                opacity : 0.1
+                display : 'block'
             }
         }
     }
@@ -98,7 +98,7 @@ class App extends Component {
                 <div className="kk-spinner-wrapper">
                  {loading ? <Spinner size={50}/> : ''}
                 </div>
-                <div> className="kk-backdrop"</div>
+                {loading ? <div className="kk-backdrop"></div> : ''}
             </div>
         )
     }
