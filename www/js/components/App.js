@@ -13,14 +13,7 @@ class App extends Component {
             }
         ],
         loading :false,
-    }
-
-    getBackdrop = () => {
-        if(this.state.loading){
-            return {
-                display : 'block'
-            }
-        }
+        conneted : false
     }
 
     onIncreaseCount = () => {
@@ -53,7 +46,8 @@ class App extends Component {
         bluetoothSerial.connect(device.address, res => {
             alert(`Connnected to ${device.name}`);
             this.setState({
-                loading : false
+                loading : false,
+                conneted : true
             });
         }, err => {
             alert(err)
@@ -61,6 +55,9 @@ class App extends Component {
     }
     onDisConnect = () => {
         bluetoothSerial.disconnect(res => {
+            this.setState({
+                conneted : false
+            })
             alert(res);
         }, err => {
             alert(err);
@@ -68,7 +65,7 @@ class App extends Component {
     }
 
     render() {
-        const {listPairedDevices, loading} = this.state;
+        const {listPairedDevices, loading, conneted} = this.state;
         return (
             <div className="kk-app">
                 <div className="kk-main-title">pdlc controller</div>
@@ -77,7 +74,7 @@ class App extends Component {
                     ? listPairedDevices.map((device, i) => {
                         return <div key={i}>
                             <div>이름 : {device.name}, 주소 : {device.address}</div>
-                            <button onClick={() => this.onConnect(device)}>CONNECT</button>
+                            {conneted != true ? <button onClick={() => this.onConnect(device)}>CONNECT</button> : ''}
                         </div>
                     })
                     : ''}
