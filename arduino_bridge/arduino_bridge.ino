@@ -1,6 +1,6 @@
-
 #define PC_BAUDRATE 115200
 #define BLUETOOTH_BAUDRATE 9600
+#define PIN 5
 
 #include <SoftwareSerial.h>
 SoftwareSerial SerialBT(2, 3); // RX, TX
@@ -9,35 +9,54 @@ bool A = true;
 bool B = true;
 bool C = true;
 bool D = true;
-int lowDelay = 16;
-int highDelay = 0;
+int analogCount = 0;
 
-void setup()
-{
-  pinMode(A0, OUTPUT);
-  pinMode(A1, OUTPUT);
-
-  Serial.begin(PC_BAUDRATE);
-  SerialBT.begin(BLUETOOTH_BAUDRATE);
-  for (int i = 8; i <= 11; i++)
-  {
-    pinMode(i, OUTPUT);
-    digitalWrite(i, HIGH);
+void setPwmFrequency(int pin, int divisor) {
+  byte mode;
+  if(pin == 5 || pin == 6 || pin == 9 || pin == 10) {
+    switch(divisor) {
+      case 1: mode = 0x01; break;
+      case 8: mode = 0x02; break;
+      case 64: mode = 0x03; break;
+      case 256: mode = 0x04; break;
+      case 1024: mode = 0x05; break;
+      default: return;
+    }
+    if(pin == 5 || pin == 6) {
+      TCCR0B = TCCR0B & 0b11111000 | mode;
+    } else {
+      TCCR1B = TCCR1B & 0b11111000 | mode;
+    }
+  } else if(pin == 3 || pin == 11) {
+    switch(divisor) {
+      case 1: mode = 0x01; break;
+      case 8: mode = 0x02; break;
+      case 32: mode = 0x03; break;
+      case 64: mode = 0x04; break;
+      case 128: mode = 0x05; break;
+      case 256: mode = 0x06; break;
+      case 1024: mode = 0x07; break;
+      default: return;
+    }
+    TCCR2B = TCCR2B & 0b11111000 | mode;
   }
 }
 
-void dimmer()
+void setup()
 {
-  digitalWrite(A0, LOW);
-  delay(lowDelay);
-  digitalWrite(A0, HIGH);
-  delay(highDelay);
+  setPwmFrequency(5,1024);
+  pinMode(PIN, OUTPUT);
+  Serial.begin(PC_BAUDRATE);
+  SerialBT.begin(BLUETOOTH_BAUDRATE);
+  // for (int i = 8; i <= 11; i++)
+  // {
+  //   pinMode(i, OUTPUT);
+  //   digitalWrite(i, HIGH);
+  // }
 }
 
 void loop()
 {
-  dimmer();
-
   if (SerialBT.available())
   {
     char data = SerialBT.read();
@@ -65,26 +84,19 @@ void loop()
     }
     else if (data == 'h')
     {
-
-      lowDelay != 0 ? lowDelay -= 1 : 0;
-      highDelay < 16 ? highDelay += 1 : 16;
-
-      Serial.print("LOWDELAY : ");
-      Serial.println(lowDelay);
-      Serial.print("HIGHDELAY : ");
-      Serial.println(highDelay);
+      if(analogCount <= 127){
+        analogCount += 9;
+      }
     }
     else if (data == 'l')
     {
-      highDelay != 0 ? highDelay -= 1 : 0;
-      lowDelay < 16 ? lowDelay += 1 : 16;
-
-      Serial.print("LOWDELAY : ");
-      Serial.println(lowDelay);
-      Serial.print("HIGHDELAY : ");
-      Serial.println(highDelay);
+      if(analogCount > 0){
+        analogCount -= 9;
+      }
     }
 
     Serial.println(data);
   }
+
+  analogWrite(5,analogCount); 
 }
