@@ -117,6 +117,15 @@ void loop()
         analogCount -= 9;
       }
     }
+    else if (data == 'o')
+    {
+      analogCount = 118;
+    }
+    else if (data == 'f')
+    {
+      analogCount = 0;
+
+    }
 
     Serial.println(data);
   }

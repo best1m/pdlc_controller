@@ -24,6 +24,14 @@ class App extends Component {
         this.onSendData('l');
     }
 
+    onSwitchOn = () => {
+        this.onSendData('o');
+    }
+
+    onSwitchOff = () => {
+        this.onSendData('f');
+    }
+
     onSendData = (type) => {
         bluetoothSerial.write(type, res => {
             console.log(res);
@@ -88,6 +96,11 @@ class App extends Component {
                 <div className='kk-button-group'>
                     <button className="kk-type-button" onClick={this.onIncreaseCount}>INCREASE</button>
                     <button className="kk-type-button" onClick={this.onDecreaseCount}>DECREASE</button>
+                </div>
+                
+                <div className='kk-button-group'>
+                    <button className="kk-type-button" onClick={this.onSwitchOn}>ON</button>
+                    <button className="kk-type-button" onClick={this.onSwitchOff}>OFF</button>
                 </div>
 
                 <button className='kk-disconnect-button' onClick={() => this.onDisConnect()}>DISCONNECT</button>
