@@ -57,17 +57,14 @@ void setup()
 
   // 5 and 6 pins set 60hz
   TCCR0B = (TCCR0B & 0b11111000) | 0x05;
-  
+
   // 9 and 10 pins set 120hz
   // TCCR1B = (TCCR1B & 0b11111000) | 0x04;
   // TCCR1A |= B00110000; //9 ~ 10pin output with inverted output
 
-
   // invert 6 pin
-  // TCCR0A = TCCR0A & ~B00110000; //switch off output B 
-  TCCR0A |= 0x30;  //5 ~ 6pin output with inverted output
-
-  
+  // TCCR0A = TCCR0A & ~B00110000; //switch off output B
+  TCCR0A |= 0x30; //5 ~ 6pin output with inverted output
 
   pinMode(PIN_5, OUTPUT);
   pinMode(PIN_6, OUTPUT);
@@ -75,6 +72,11 @@ void setup()
   pinMode(PIN_8, OUTPUT);
   pinMode(PIN_9, OUTPUT);
   pinMode(PIN_10, OUTPUT);
+
+  digitalWrite(7, HIGH);
+  digitalWrite(8, HIGH);
+  digitalWrite(9, HIGH);
+  digitalWrite(10, HIGH);
 
   Serial.begin(PC_BAUDRATE);
   SerialBT.begin(BLUETOOTH_BAUDRATE);
@@ -90,14 +92,16 @@ void setup()
 
 void loop()
 {
+
+
+
   if (SerialBT.available())
-   
+
   {
     char data = SerialBT.read();
 
     if (data == 'a')
     {
-
       digitalWrite(PIN_7, A ? LOW : HIGH);
       A = !A;
     }
@@ -118,13 +122,15 @@ void loop()
     }
     else if (data == 'h')
     {
-      if(analogCount <= 118){
+      if (analogCount <= 118)
+      {
         analogCount += 9;
       }
     }
     else if (data == 'l')
     {
-      if(analogCount > 0){
+      if (analogCount > 0)
+      {
         analogCount -= 9;
       }
     }
@@ -135,14 +141,13 @@ void loop()
     else if (data == 'f')
     {
       analogCount = 0;
-
     }
 
     Serial.println(data);
   }
 
-  analogWrite(PIN_5, analogCount); 
-  analogWrite(PIN_6, - analogCount); 
-  // analogWrite(9, analogCount); 
-  // analogWrite(10, - analogCount); 
+  analogWrite(PIN_5, analogCount);
+  analogWrite(PIN_6, -analogCount);
+  // analogWrite(9, analogCount);
+  // analogWrite(10, - analogCount);
 }
