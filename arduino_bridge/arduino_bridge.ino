@@ -1,7 +1,12 @@
 #define PC_BAUDRATE 115200
 #define BLUETOOTH_BAUDRATE 9600
-#define PIN_1 5
-#define PIN_2 6
+#define PIN_5 5
+#define PIN_6 6
+
+#define PIN_7 7
+#define PIN_8 8
+#define PIN_9 9
+#define PIN_10 10
 
 #include <SoftwareSerial.h>
 SoftwareSerial SerialBT(0, 1); // RX, TX
@@ -47,6 +52,7 @@ int analogCount = 0;
 
 void setup()
 {
+  Serial.println('hello world');
   // setPwmFrequency(5,1024);
 
   // 5 and 6 pins set 60hz
@@ -54,18 +60,22 @@ void setup()
   
   // 9 and 10 pins set 120hz
   // TCCR1B = (TCCR1B & 0b11111000) | 0x04;
+  // TCCR1A |= B00110000; //9 ~ 10pin output with inverted output
+
 
   // invert 6 pin
   // TCCR0A = TCCR0A & ~B00110000; //switch off output B 
   TCCR0A |= 0x30;  //5 ~ 6pin output with inverted output
 
-  TCCR1A |= B00110000; //9 ~ 10pin output with inverted output
   
 
-  pinMode(PIN_1, OUTPUT);
-  pinMode(PIN_2, OUTPUT);
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);
+  pinMode(PIN_5, OUTPUT);
+  pinMode(PIN_6, OUTPUT);
+  pinMode(PIN_7, OUTPUT);
+  pinMode(PIN_8, OUTPUT);
+  pinMode(PIN_9, OUTPUT);
+  pinMode(PIN_10, OUTPUT);
+
   Serial.begin(PC_BAUDRATE);
   SerialBT.begin(BLUETOOTH_BAUDRATE);
 
@@ -81,28 +91,29 @@ void setup()
 void loop()
 {
   if (SerialBT.available())
+   
   {
     char data = SerialBT.read();
 
     if (data == 'a')
     {
 
-      digitalWrite(8, A ? LOW : HIGH);
+      digitalWrite(PIN_7, A ? LOW : HIGH);
       A = !A;
     }
     else if (data == 'b')
     {
-      digitalWrite(9, B ? LOW : HIGH);
+      digitalWrite(PIN_8, B ? LOW : HIGH);
       B = !B;
     }
     else if (data == 'c')
     {
-      digitalWrite(10, C ? LOW : HIGH);
+      digitalWrite(PIN_9, C ? LOW : HIGH);
       C = !C;
     }
     else if (data == 'd')
     {
-      digitalWrite(11, D ? LOW : HIGH);
+      digitalWrite(PIN_10, D ? LOW : HIGH);
       D = !D;
     }
     else if (data == 'h')
@@ -130,8 +141,8 @@ void loop()
     Serial.println(data);
   }
 
-  analogWrite(PIN_1, analogCount); 
-  analogWrite(PIN_2, - analogCount); 
+  analogWrite(PIN_5, analogCount); 
+  analogWrite(PIN_6, - analogCount); 
   // analogWrite(9, analogCount); 
   // analogWrite(10, - analogCount); 
 }

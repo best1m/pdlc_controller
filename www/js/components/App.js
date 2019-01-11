@@ -86,12 +86,12 @@ class App extends Component {
                         </div>
                     })
                     : ''}
-                {/* <div className='kk-button-group'>
+                <div className='kk-button-group'>
                     <button className="kk-type-button" onClick={() => this.onSendData('a')}>TYPE A</button>
                     <button className="kk-type-button" onClick={() => this.onSendData('b')}>TYPE B</button>
                     <button className="kk-type-button" onClick={() => this.onSendData('c')}>TYPE C</button>
                     <button className="kk-type-button" onClick={() => this.onSendData('d')}>TYPE D</button>
-                </div> */}
+                </div>
 
                 <div className='kk-button-group'>
                     <button className="kk-type-button" onClick={this.onIncreaseCount}>INCREASE</button>
