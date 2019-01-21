@@ -148,6 +148,4 @@ void loop()
 
   analogWrite(PIN_5, analogCount);
   analogWrite(PIN_6, -analogCount);
-  // analogWrite(9, analogCount);
-  // analogWrite(10, - analogCount);
 }

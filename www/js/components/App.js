@@ -18,7 +18,6 @@ class App extends Component {
         ],
         powerValue : true,
         step : 0,
-        aValue : '',
         loading :false,
         conneted : false,
         relayButtons : [
@@ -27,6 +26,31 @@ class App extends Component {
             {value : 'c', label : 'C', activation : false},
             {value : 'd', label : 'D', activation : false},
         ]
+    }
+
+    onConnect = (device) => {
+        this.setState({
+            loading : true
+        });
+        bluetoothSerial.connect(device.address, res => {
+            this.setState({
+                loading : false,
+                conneted : true
+            });
+            alert(`Connnected to ${device.name}`);
+        }, err => {
+            alert(err)
+        })
+    }
+
+    getListPairedDevices = () => {
+        
+        bluetoothSerial.list(res => {
+        this.setState({listPairedDevices: res})
+        }, err => {
+            alert(err);
+        });
+    
     }
 
     onIncreaseCount = () => {
@@ -51,6 +75,11 @@ class App extends Component {
     }
 
     onPowerToggle = (value) => {
+
+        alert(bluetoothSerial.showBluetoothSettings());
+
+        return;
+
         const {powerValue} = this.state;
         this.setState({
             powerValue : !powerValue
@@ -92,27 +121,6 @@ class App extends Component {
         });
     }
 
-    callListPairedDevices = () => {
-        bluetoothSerial.list(res => {
-            this.setState({listPairedDevices: res})
-        }, err => {
-            alert(err);
-        });
-    }
-    onConnect = (device) => {
-        this.setState({
-            loading : true
-        });
-        bluetoothSerial.connect(device.address, res => {
-            this.setState({
-                loading : false,
-                conneted : true
-            });
-            alert(`Connnected to ${device.name}`);
-        }, err => {
-            alert(err)
-        })
-    }
     onDisConnect = () => {
         bluetoothSerial.disconnect(res => {
             this.setState({
@@ -130,7 +138,7 @@ class App extends Component {
         return (
             <div className="kk-app">
                 <div className="kk-main-title">PDLC CONTROLLER</div>
-                {/* <button onClick={this.callListPairedDevices}>LIST</button> */}
+                <button onClick={this.getListPairedDevices}>LIST</button>
                 {/* {listPairedDevices.length > 0
                     ? listPairedDevices.map((device, i) => {
                         return <div key={i}>
@@ -139,6 +147,15 @@ class App extends Component {
                         </div>
                     })
                     : ''} */}
+                    {
+                        listPairedDevices.map((device, i) => {
+                            <div>{device}</div>
+                            return <div key={i}>
+                                <div>이름 : {device.name}, 주소 : {device.address}</div>
+                                {conneted != true ? <button onClick={() => this.onConnect(device)}>CONNECT</button> : ''}
+                            </div>
+                        })
+                    }
                     <div className="kk-power-button-group">
                         <div className="kk-power-button" onClick={this.onPowerToggle}>
                             <img src={powerButton}/>
