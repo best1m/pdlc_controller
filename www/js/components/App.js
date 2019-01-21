@@ -16,28 +16,73 @@ class App extends Component {
                 address: '...',
             }
         ],
+        powerValue : true,
+        step : 0,
+        aValue : '',
         loading :false,
         conneted : false,
-        test : powerButton
+        relayButtons : [
+            {value : 'a', label : 'A', activation : false},
+            {value : 'b', label : 'B', activation : false},
+            {value : 'c', label : 'C', activation : false},
+            {value : 'd', label : 'D', activation : false},
+        ]
     }
 
     onIncreaseCount = () => {
-        this.onSendData('h');
+        const {step} = this.state;
+        if(step < 12){
+            this.setState({
+                step : step + 1
+            })
+        }
+     
+        // this.onSendData('h');
     }
 
     onDecreaseCount = () => {
-        this.onSendData('l');
+        const {step} = this.state;
+        if(step > 0){
+            this.setState({
+                step : step - 1
+            })
+        }
+        // this.onSendData('l');
     }
 
-    onSwitchOn = () => {
-        this.onSendData('o');
-    }
+    onPowerToggle = (value) => {
+        const {powerValue} = this.state;
+        this.setState({
+            powerValue : !powerValue
+        })
 
-    onSwitchOff = () => {
-        this.onSendData('f');
-    }
+        if(powerValue){
+            this.setState({
+                step : 12
+            })
+            // this.onSendData('o');
+        }else{
+            this.setState({
+                step : 0
+            })
+            // this.onSendData('f');
+        }
+    };
 
     onSendData = (type) => {
+        const {relayButtons} = this.state;
+        let currentRealyButtons = relayButtons;
+
+        for(var p in currentRealyButtons){
+            if(type == currentRealyButtons[p].value){
+                currentRealyButtons[p].activation = !currentRealyButtons[p].activation;
+            }
+        }
+
+        this.setState({
+            relayButtons : currentRealyButtons
+        })
+
         bluetoothSerial.write(type, res => {
             console.log(res);
         }, err => {
@@ -78,7 +123,7 @@ class App extends Component {
     }
 
     render() {
-        const {listPairedDevices, loading, conneted} = this.state;
+        const {listPairedDevices, loading, conneted, step, relayButtons} = this.state;
         return (
             <div className="kk-app">
                 <div className="kk-main-title">PDLC CONTROLLER</div>
@@ -92,26 +137,29 @@ class App extends Component {
                     })
                     : ''} */}
                     <div className="kk-power-button-group">
-                        <div className="kk-power-button">
+                        <div className="kk-power-button" onClick={this.onPowerToggle}>
                             <img src={powerButton}/>
                         </div>
                     </div>
 
                     <div className="kk-volumn-button-group">
-                        <div className="kk-volumn-button">
+                        <div className="kk-volumn-button" onClick={this.onIncreaseCount}>
                             <img src={increaseButton}/>
                         </div>
-                        <div className="kk-gauge">12</div>
-                        <div className="kk-volumn-button kk-minus">
+                        <div className="kk-step">{step}</div>
+                        <div className="kk-volumn-button kk-minus" onClick={this.onDecreaseCount}>
                             <img src={decreaseButton}/>
                         </div>
                     </div>
 
                     <div className="kk-relay-button-group">
-                        <div className="kk-relay-button">A</div>
-                        <div className="kk-relay-button">B</div>
-                        <div className="kk-relay-button">C</div>
-                        <div className="kk-relay-button">D</div>
+                    {relayButtons.map((button, i) => {
+                        return <div key={i} className="kk-relay-button" onClick={() => this.onSendData(button.value)}>{button.label}</div>
+                    })}
+                        {/* <div className="kk-relay-button" onClick={() => this.onSendData('a')}>A</div>
+                        <div className="kk-relay-button" onClick={() => this.onSendData('b')}>B</div>
+                        <div className="kk-relay-button" onClick={() => this.onSendData('c')}>C</div>
+                        <div className="kk-relay-button" onClick={() => this.onSendData('d')}>D</div> */}
                     </div>
              
                     <img className="kk-logo" src={logo}/>
