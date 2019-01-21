@@ -5,7 +5,7 @@
     "description": "A sample Apache Cordova application that responds to the deviceready event.",
     "main": "index.js",
     "scripts": {
-        "start": "webpack-dev-server --mode development --open --hot",
+        "start": "cross-env NODE_PATH=www webpack-dev-server --mode development --open --hot",
         "build": "webpack --mode production"
     },
     "author": "Apache Cordova Team",
@@ -25,11 +25,13 @@
         "babel-plugin-transform-class-properties": "^6.24.1",
         "babel-preset-env": "^1.7.0",
         "babel-preset-react": "^6.24.1",
+        "cross-env": "^5.2.0",
         "css-loader": "^1.0.0",
         "html-webpack-plugin": "^3.2.0",
         "node-sass": "^4.9.3",
         "sass-loader": "^7.1.0",
         "style-loader": "^0.23.0",
+        "url-loader": "^1.1.2",
         "webpack": "^4.17.2",
         "webpack-cli": "^3.1.0",
         "webpack-dev-server": "^3.1.7"

@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import bluetoothSerial from 'cordova-plugin-bluetooth-serial';
 import '../../scss/main.scss';
 import Spinner from "react-md-spinner";
+import powerButton from '../../img/power.png';
+import increaseButton from '../../img/plus.png';
+import decreaseButton from '../../img/minus.png';
+import logo from '../../img/logoImage.png';
 
 class App extends Component {
 
@@ -13,7 +17,8 @@ class App extends Component {
             }
         ],
         loading :false,
-        conneted : false
+        conneted : false,
+        test : powerButton
     }
 
     onIncreaseCount = () => {
@@ -76,17 +81,41 @@ class App extends Component {
         const {listPairedDevices, loading, conneted} = this.state;
         return (
             <div className="kk-app">
-                <div className="kk-main-title">pdlc controller</div>
-                <button onClick={this.callListPairedDevices}>LIST</button>
-                {listPairedDevices.length > 0
+                <div className="kk-main-title">PDLC CONTROLLER</div>
+                {/* <button onClick={this.callListPairedDevices}>LIST</button> */}
+                {/* {listPairedDevices.length > 0
                     ? listPairedDevices.map((device, i) => {
                         return <div key={i}>
                             <div>이름 : {device.name}, 주소 : {device.address}</div>
                             {conneted != true ? <button onClick={() => this.onConnect(device)}>CONNECT</button> : ''}
                         </div>
                     })
-                    : ''}
-                <div className='kk-button-group'>
+                    : ''} */}
+                    <div className="kk-power-button-group">
+                        <div className="kk-power-button">
+                            <img src={powerButton}/>
+                        </div>
+                    </div>
+
+                    <div className="kk-volumn-button-group">
+                        <div className="kk-volumn-button">
+                            <img src={increaseButton}/>
+                        </div>
+                        <div className="kk-gauge">12</div>
+                        <div className="kk-volumn-button kk-minus">
+                            <img src={decreaseButton}/>
+                        </div>
+                    </div>
+
+                    <div className="kk-relay-button-group">
+                        <div className="kk-relay-button">A</div>
+                        <div className="kk-relay-button">B</div>
+                        <div className="kk-relay-button">C</div>
+                        <div className="kk-relay-button">D</div>
+                    </div>
+             
+                    <img className="kk-logo" src={logo}/>
+                {/* <div className='kk-button-group'>
                     <button className="kk-type-button" onClick={() => this.onSendData('a')}>TYPE A</button>
                     <button className="kk-type-button" onClick={() => this.onSendData('b')}>TYPE B</button>
                     <button className="kk-type-button" onClick={() => this.onSendData('c')}>TYPE C</button>
@@ -103,7 +132,7 @@ class App extends Component {
                     <button className="kk-type-button" onClick={this.onSwitchOff}>OFF</button>
                 </div>
 
-                <button className='kk-disconnect-button' onClick={() => this.onDisConnect()}>DISCONNECT</button>
+                <button className='kk-disconnect-button' onClick={() => this.onDisConnect()}>DISCONNECT</button> */}
 
                 <div className="kk-spinner-wrapper">
                  {loading ? <Spinner size={50}/> : ''}

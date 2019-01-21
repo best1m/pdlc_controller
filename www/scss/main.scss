@@ -1,21 +1,86 @@
 .kk-app {
     height: 100vh;
 
+    $button-shadow : 1px 3px 20px -4px rgb(0,0,0);
+    $button-background : linear-gradient(rgb(69,74,77), rgb(66,71,74), rgb(62,67,70), rgb(59,63,66), rgb(57,61,64));
+
     .kk-main-title {
-        font-size: 30px;
+        padding: 50px 0 50px 0;
+        font-size: 20px;
+        color:rgb(175,147,108);
+        text-align: center;
     }
 
-    background-color: skyblue;
+    background-color: rgb(44,47,50);
 
-
-    .kk-button-group {
-        margin-top: 30px;
-
-
-        .kk-type-button {
-            margin: 10px;
-            height: 50px;
+    .kk-power-button-group {
+        text-align: center;
+        margin-bottom: 40px;
+        .kk-power-button {
+            line-height: 4;
+            display: inline-block;
+            background-image: $button-background; 
+            box-shadow: $button-shadow;
+            width: 58px;
+            height: 58px;
+            border-radius: 100px;
         }
+    }
+
+    .kk-volumn-button-group {
+        text-align: center;
+
+        .kk-volumn-button {
+            line-height: 4.3;
+            display: inline-block;
+            background-image: $button-background; 
+            box-shadow: $button-shadow;
+            width: 58px;
+            height: 58px;
+            border-radius: 100px;
+            vertical-align: top;
+        }
+
+        .kk-minus {
+            line-height: 3.3;
+        }
+        
+        .kk-gauge {
+            vertical-align: top;
+            display: inline-block;
+            line-height: 3.5;
+            width: 58px;
+            height: 58px;
+        }
+
+    }
+
+
+
+
+    .kk-relay-button-group {
+        margin-top: 80px;
+        text-align: center;
+
+    
+        .kk-relay-button {
+            line-height: 4;
+            color: white;
+            margin-right: 16px;
+            display: inline-block;
+            background-image: $button-background; 
+            box-shadow: $button-shadow;
+            width: 58px;
+            height: 58px;
+            border-radius: 4px;
+        }
+    }
+
+    .kk-logo {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     .kk-disconnect-button {
