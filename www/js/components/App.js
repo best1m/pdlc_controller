@@ -32,6 +32,15 @@ class App extends Component {
             loading : true
         });
 
+        bluetoothSerial.isEnabled(
+            res => {
+            }, err => {
+                alert('블루투스를 활성화 하세요.');
+                this.setState({
+                    loading : false,
+                });
+        });
+
         bluetoothSerial.list(res => {
 
         for(var p in res){
@@ -42,7 +51,7 @@ class App extends Component {
                     loading : false,
                     conneted : true
                 });
-                alert(`Connnected to ${device.name}`);
+                // alert(`Connnected to ${device.name}`);
             }, err => {
                 alert(err);
                 this.setState({
@@ -184,6 +193,7 @@ class App extends Component {
                  {loading ? <Spinner size={50}/> : ''}
                 </div>
                 {loading ? <div className="kk-backdrop"></div> : ''}
+
                 {!conneted ? <div className="kk-firstStepPage">
                     <div className="kk-inner-container">
                         <div className="kk-inner-box">
