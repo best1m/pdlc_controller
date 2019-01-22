@@ -144,14 +144,6 @@ void loop()
     }
 
     Serial.println(data);
-  }else{
-
-    digitalWrite(7, HIGH);
-    digitalWrite(8, HIGH);
-    digitalWrite(9, HIGH);
-    digitalWrite(10, HIGH);
-    analogCount = 0;
-
   }
 
   analogWrite(PIN_5, analogCount);
