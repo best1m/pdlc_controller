@@ -1,25 +1,26 @@
 .kk-app {
     height: 100vh;
 
-    $button-shadow : 1px 3px 20px -4px rgb(0,0,0);
-    $button-background : linear-gradient(rgb(69,74,77), rgb(66,71,74), rgb(62,67,70), rgb(59,63,66), rgb(57,61,64));
+    $button-shadow: 1px 3px 20px -4px rgb(0, 0, 0);
+    $button-background: linear-gradient(rgb(69, 74, 77), rgb(66, 71, 74), rgb(62, 67, 70), rgb(59, 63, 66), rgb(57, 61, 64));
 
     .kk-main-title {
         padding: 50px 0 50px 0;
         font-size: 25px;
-        color:rgb(175,147,108);
+        color: rgb(175, 147, 108);
         text-align: center;
     }
 
-    background-color: rgb(44,47,50);
+    background-color: rgb(44, 47, 50);
 
     .kk-power-button-group {
         text-align: center;
         margin-bottom: 40px;
+
         .kk-power-button {
             line-height: 4;
             display: inline-block;
-            background-color: rgb(167,1,21);
+            background-color: rgb(167, 1, 21);
             box-shadow: $button-shadow;
             width: 58px;
             height: 58px;
@@ -33,7 +34,7 @@
         .kk-volumn-button {
             line-height: 4.3;
             display: inline-block;
-            background-image: $button-background; 
+            background-image: $button-background;
             box-shadow: $button-shadow;
             width: 58px;
             height: 58px;
@@ -44,8 +45,8 @@
         .kk-minus {
             line-height: 3.3;
         }
-        
-        .kk-step {
+
+        .kk-dimmingCount {
             letter-spacing: 0;
             vertical-align: top;
             display: inline-block;
@@ -64,13 +65,13 @@
         margin-top: 80px;
         text-align: center;
 
-    
+
         .kk-relay-button {
             line-height: 4;
             color: white;
             margin-right: 16px;
             display: inline-block;
-            background-image: $button-background; 
+            background-image: $button-background;
             box-shadow: $button-shadow;
             width: 58px;
             height: 58px;
@@ -102,6 +103,7 @@
     }
 
     .kk-backdrop {
+        z-index: 1;
         position: absolute;
         background-color: black;
         height: 100%;
@@ -109,5 +111,40 @@
         right: 0;
         left: 0;
         opacity: 0.5;
+    }
+
+    .kk-firstStepPage {
+        z-index: 2;
+        background-color: rgb(44, 47, 50);
+        position: absolute;
+        height: 100%;
+        bottom: 0;
+        right: 0;
+        left: 0;
+
+        .kk-inner-container {
+            
+
+            .kk-connect-button {
+                line-height: 4;
+                color: white;
+                background-image: $button-background;
+                box-shadow: $button-shadow;
+                text-align: center;
+                width: 100px;
+                height: 58px;
+                border-radius: 4px;
+
+            }
+
+            .kk-title {
+                font-size: 16px;
+                font-weight: 600;
+                color: white;
+            }
+        }
+
+
+
     }
 }

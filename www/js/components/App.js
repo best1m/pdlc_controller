@@ -7,17 +7,13 @@ import increaseButton from '../../img/plus.png';
 import decreaseButton from '../../img/minus.png';
 import logo from '../../img/logoImage.png';
 
+
+
 class App extends Component {
 
     state = {
-        listPairedDevices: [
-            {
-                name: '...',
-                address: '...',
-            }
-        ],
         powerValue : true,
-        step : 0,
+        dimmingCount : 0,
         loading :false,
         conneted : false,
         relayButtons : [
@@ -28,57 +24,64 @@ class App extends Component {
         ]
     }
 
-    onConnect = (device) => {
+
+    onConnect = () => {
+
+
         this.setState({
             loading : true
         });
-        bluetoothSerial.connect(device.address, res => {
-            this.setState({
-                loading : false,
-                conneted : true
-            });
-            alert(`Connnected to ${device.name}`);
-        }, err => {
-            alert(err)
-        })
-    }
 
-    getListPairedDevices = () => {
-        
         bluetoothSerial.list(res => {
-        this.setState({listPairedDevices: res})
+
+        for(var p in res){
+            if(res[p].name == 'HC-06'){
+            const device = res[p];
+            bluetoothSerial.connect(device.address, res => {
+                this.setState({
+                    loading : false,
+                    conneted : true
+                });
+                alert(`Connnected to ${device.name}`);
+            }, err => {
+                alert(err);
+                this.setState({
+                    loading : false,
+                });
+            })
+            }
+        }
+
+
         }, err => {
             alert(err);
         });
+
     
     }
 
     onIncreaseCount = () => {
-        const {step} = this.state;
-        if(step < 12){
+        const {dimmingCount} = this.state;
+        if(dimmingCount < 12){
             this.setState({
-                step : step + 1
+                dimmingCount : dimmingCount + 1
             })
         }
      
-        // this.onSendData('h');
+        this.onSendData('h');
     }
 
     onDecreaseCount = () => {
-        const {step} = this.state;
-        if(step > 0){
+        const {dimmingCount} = this.state;
+        if(dimmingCount > 0){
             this.setState({
-                step : step - 1
+                dimmingCount : dimmingCount - 1
             })
         }
-        // this.onSendData('l');
+        this.onSendData('l');
     }
 
     onPowerToggle = (value) => {
-
-        alert(bluetoothSerial.showBluetoothSettings());
-
-        return;
 
         const {powerValue} = this.state;
         this.setState({
@@ -87,14 +90,14 @@ class App extends Component {
 
         if(powerValue){
             this.setState({
-                step : 12
+                dimmingCount : 12
             })
-            // this.onSendData('o');
+            this.onSendData('o');
         }else{
             this.setState({
-                step : 0
+                dimmingCount : 0
             })
-            // this.onSendData('f');
+            this.onSendData('f');
         }
     };
 
@@ -112,7 +115,6 @@ class App extends Component {
             relayButtons : currentRealyButtons
         })
         console.log(relayButtons);
-        return;
 
         bluetoothSerial.write(type, res => {
             console.log(res);
@@ -133,29 +135,24 @@ class App extends Component {
     }
 
     render() {
-        const {listPairedDevices, loading, conneted, step, relayButtons} = this.state;
+        const {loading, conneted, dimmingCount, relayButtons} = this.state;
         const activationStyle = {color : '#00e600'}
         return (
             <div className="kk-app">
                 <div className="kk-main-title">PDLC CONTROLLER</div>
-                <button onClick={this.getListPairedDevices}>LIST</button>
-                {/* {listPairedDevices.length > 0
+
+                 {/* <button onClick={this.getListPairedDevices}>LIST</button>
+                {
+                    listPairedDevices.length > 0
                     ? listPairedDevices.map((device, i) => {
                         return <div key={i}>
                             <div>이름 : {device.name}, 주소 : {device.address}</div>
                             {conneted != true ? <button onClick={() => this.onConnect(device)}>CONNECT</button> : ''}
                         </div>
-                    })
-                    : ''} */}
-                    {
-                        listPairedDevices.map((device, i) => {
-                            <div>{device}</div>
-                            return <div key={i}>
-                                <div>이름 : {device.name}, 주소 : {device.address}</div>
-                                {conneted != true ? <button onClick={() => this.onConnect(device)}>CONNECT</button> : ''}
-                            </div>
-                        })
-                    }
+                    }) : ''
+                    
+                }  */}
+                    
                     <div className="kk-power-button-group">
                         <div className="kk-power-button" onClick={this.onPowerToggle}>
                             <img src={powerButton}/>
@@ -166,7 +163,7 @@ class App extends Component {
                          <div className="kk-volumn-button kk-minus" onClick={this.onDecreaseCount}>
                             <img src={decreaseButton}/>
                          </div>
-                        <div className="kk-step">{step}</div>
+                        <div className="kk-dimmingCount">{dimmingCount}</div>
                         <div className="kk-volumn-button" onClick={this.onIncreaseCount}>
                             <img src={increaseButton}/>
                        </div>
@@ -179,36 +176,20 @@ class App extends Component {
                                 {button.label}
                                </div>
                     })}
-                        {/* <div className="kk-relay-button" onClick={() => this.onSendData('a')}>A</div>
-                        <div className="kk-relay-button" onClick={() => this.onSendData('b')}>B</div>
-                        <div className="kk-relay-button" onClick={() => this.onSendData('c')}>C</div>
-                        <div className="kk-relay-button" onClick={() => this.onSendData('d')}>D</div> */}
                     </div>
              
                     <img className="kk-logo" src={logo}/>
-                {/* <div className='kk-button-group'>
-                    <button className="kk-type-button" onClick={() => this.onSendData('a')}>TYPE A</button>
-                    <button className="kk-type-button" onClick={() => this.onSendData('b')}>TYPE B</button>
-                    <button className="kk-type-button" onClick={() => this.onSendData('c')}>TYPE C</button>
-                    <button className="kk-type-button" onClick={() => this.onSendData('d')}>TYPE D</button>
-                </div>
-
-                <div className='kk-button-group'>
-                    <button className="kk-type-button" onClick={this.onIncreaseCount}>INCREASE</button>
-                    <button className="kk-type-button" onClick={this.onDecreaseCount}>DECREASE</button>
-                </div>
-                
-                <div className='kk-button-group'>
-                    <button className="kk-type-button" onClick={this.onSwitchOn}>ON</button>
-                    <button className="kk-type-button" onClick={this.onSwitchOff}>OFF</button>
-                </div>
-
-                <button className='kk-disconnect-button' onClick={() => this.onDisConnect()}>DISCONNECT</button> */}
 
                 <div className="kk-spinner-wrapper">
                  {loading ? <Spinner size={50}/> : ''}
                 </div>
                 {loading ? <div className="kk-backdrop"></div> : ''}
+                {!conneted ? <div className="kk-firstStepPage">
+                    <div className="kk-inner-container">
+                        <div className="kk-connect-button" onClick={this.onConnect}>CONNECT</div>
+                        <div className="kk-title">실행전에 블루투스 설정을 활성화 하세요.</div>
+                    </div>
+                </div> : ''}
             </div>
         )
     }
