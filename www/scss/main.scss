@@ -114,6 +114,7 @@
     }
 
     .kk-firstStepPage {
+        text-align: center;
         z-index: 2;
         background-color: rgb(44, 47, 50);
         position: absolute;
@@ -123,25 +124,37 @@
         left: 0;
 
         .kk-inner-container {
-            
+            height: 100%;
+            width: 100%;
+            display: table;
 
-            .kk-connect-button {
-                line-height: 4;
-                color: white;
-                background-image: $button-background;
-                box-shadow: $button-shadow;
-                text-align: center;
-                width: 100px;
-                height: 58px;
-                border-radius: 4px;
+            .kk-inner-box {
+                display: table-cell;
+                vertical-align: middle;
 
+
+                .kk-connect-button {
+                    margin-bottom: 30px;
+                    display: inline-block;
+                    line-height: 4;
+                    color: white;
+                    background-image: $button-background;
+                    box-shadow: $button-shadow;
+                    text-align: center;
+                    width: 100px;
+                    height: 58px;
+                    border-radius: 4px;
+    
+                }
+    
+                .kk-title {
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: white;
+                }
             }
 
-            .kk-title {
-                font-size: 16px;
-                font-weight: 600;
-                color: white;
-            }
+       
         }
 
 

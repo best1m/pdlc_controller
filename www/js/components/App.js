@@ -186,8 +186,10 @@ class App extends Component {
                 {loading ? <div className="kk-backdrop"></div> : ''}
                 {!conneted ? <div className="kk-firstStepPage">
                     <div className="kk-inner-container">
-                        <div className="kk-connect-button" onClick={this.onConnect}>CONNECT</div>
-                        <div className="kk-title">실행전에 블루투스 설정을 활성화 하세요.</div>
+                        <div className="kk-inner-box">
+                            <div className="kk-connect-button" onClick={this.onConnect}>CONNECT</div>
+                            <div className="kk-title">실행전에 설정에서 블루투스를 활성화 하세요.</div>
+                        </div>
                     </div>
                 </div> : ''}
             </div>
