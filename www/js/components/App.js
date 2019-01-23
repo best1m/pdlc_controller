@@ -45,7 +45,7 @@ class App extends Component {
         bluetoothSerial.list(res => {
 
         for(var p in res){
-            if(res[p].name == 'HC-06'){
+            if(res[p].name == 'SFMKPDLCAPP'){
             const device = res[p];
             bluetoothSerial.connect(device.address, res => {
                 this.setState({
