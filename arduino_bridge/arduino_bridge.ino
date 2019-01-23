@@ -1,15 +1,18 @@
-#define PC_BAUDRATE 115200
+#define PC_BAUDRATE 9600
 #define BLUETOOTH_BAUDRATE 9600
 #define PIN_5 5
 #define PIN_6 6
 
-#define PIN_7 7
-#define PIN_8 8
 #define PIN_9 9
 #define PIN_10 10
+#define PIN_11 11
+#define PIN_12 12
+
+#define BT_RXD 8
+#define BT_TXD 7
 
 #include <SoftwareSerial.h>
-SoftwareSerial SerialBT(0, 1); // RX, TX
+SoftwareSerial SerialBT(BT_RXD, BT_TXD); // RX, TX
 
 bool A = true;
 bool B = true;
@@ -68,15 +71,15 @@ void setup()
 
   pinMode(PIN_5, OUTPUT);
   pinMode(PIN_6, OUTPUT);
-  pinMode(PIN_7, OUTPUT);
-  pinMode(PIN_8, OUTPUT);
   pinMode(PIN_9, OUTPUT);
   pinMode(PIN_10, OUTPUT);
+  pinMode(PIN_11, OUTPUT);
+  pinMode(PIN_12, OUTPUT);
 
-  digitalWrite(7, HIGH);
-  digitalWrite(8, HIGH);
-  digitalWrite(9, HIGH);
-  digitalWrite(10, HIGH);
+  digitalWrite(PIN_9, HIGH);
+  digitalWrite(PIN_10, HIGH);
+  digitalWrite(PIN_11, HIGH);
+  digitalWrite(PIN_12, HIGH);
 
   Serial.begin(PC_BAUDRATE);
   SerialBT.begin(BLUETOOTH_BAUDRATE);
@@ -94,7 +97,6 @@ void loop()
 {
 
 
-
   if (SerialBT.available())
 
   {
@@ -102,22 +104,22 @@ void loop()
 
     if (data == 'a')
     {
-      digitalWrite(PIN_7, A ? LOW : HIGH);
+      digitalWrite(PIN_9, A ? LOW : HIGH);
       A = !A;
     }
     else if (data == 'b')
     {
-      digitalWrite(PIN_8, B ? LOW : HIGH);
+      digitalWrite(PIN_10, B ? LOW : HIGH);
       B = !B;
     }
     else if (data == 'c')
     {
-      digitalWrite(PIN_9, C ? LOW : HIGH);
+      digitalWrite(PIN_11, C ? LOW : HIGH);
       C = !C;
     }
     else if (data == 'd')
     {
-      digitalWrite(PIN_10, D ? LOW : HIGH);
+      digitalWrite(PIN_12, D ? LOW : HIGH);
       D = !D;
     }
     else if (data == 'h')
@@ -143,7 +145,12 @@ void loop()
       analogCount = 0;
     }
 
-    Serial.println(data);
+    Serial.print(data);
+  }
+
+  if (Serial.available()) 
+  {
+    SerialBT.write(Serial.read());
   }
 
   analogWrite(PIN_5, analogCount);

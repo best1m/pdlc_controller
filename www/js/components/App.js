@@ -34,7 +34,8 @@ class App extends Component {
 
         bluetoothSerial.isEnabled(
             res => {
-            }, err => {
+            }, 
+            err => {
                 alert('블루투스를 활성화 하세요.');
                 this.setState({
                     loading : false,
