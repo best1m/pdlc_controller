@@ -57,6 +57,7 @@ class App extends Component {
                 alert(err);
                 this.setState({
                     loading : false,
+                    conneted : false
                 });
             })
             }

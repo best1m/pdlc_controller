@@ -148,6 +148,8 @@ void loop()
     Serial.print(data);
   }
 
+
+
   if (Serial.available()) 
   {
     SerialBT.write(Serial.read());
